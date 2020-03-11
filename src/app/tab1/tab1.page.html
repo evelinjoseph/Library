@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>My Library</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
+  <ion-item *ngFor="let item of resultArr">
+    <ion-label>
+      <ion-note style="font-weight:bold">
+        {{item.itemName}}
+      </ion-note>
+    </ion-label>
+  </ion-item>
+
+</ion-content>

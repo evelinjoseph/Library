@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      My Library
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color = "primary">
+  <img class="displayed"  height="170 px" width="170 px" src="assets/images/MyLibraryAppLogo.png" alt="logo">
+    <div padding>    
+      <ion-item>    
+            <ion-label position = "floating">
+              Email Address
+            </ion-label>
+            <ion-input type = "text" [(ngModel)]="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position = "floating">
+              Password
+            </ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        </div>
+     
+ <div style="text-align: center"> 
+  <section >
+    <ion-button [routerDirection] = "'forward'" [routerLink]="['/register']">Register</ion-button>
+    <ion-button (click)="login()">Login</ion-button>
+     <ion-button [routerDirection] = "'forward'" [routerLink]="['/tabs']">Continue As A Guest</ion-button>
+    <!--<ion-button (click)="continue_Guest()" >Continue As A Guest</ion-button>-->
+  </section>
+</div>
+  
+</ion-content>

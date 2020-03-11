@@ -1,0 +1,9 @@
+{
+  "name": "LibraryApp",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "0db8e8f9"
+}
