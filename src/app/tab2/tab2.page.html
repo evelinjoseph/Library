@@ -20,11 +20,13 @@
      </ion-card-content>
    </ion-card>
  </ion-item>
-
-
 </ion-content>
-<ion-footer no-shadow>
+
+<ion-footer *ngIf="((userItems | async)?.cart).length > 0" no-shadow>
+  
   <ion-toolbar position="bottom" style="text-align: center"> 
+    
     <ion-button (click)="checkOut()">Checkout</ion-button>
   </ion-toolbar>
+
 </ion-footer>

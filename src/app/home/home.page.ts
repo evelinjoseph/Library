@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserService } from '../user.service';
 
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -56,6 +57,13 @@ export class HomePage implements OnInit{
   }
 
   async continue_Guest(){
+
+    this.afAuth.auth.signInAnonymously().catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      
+    });
 
     this.nacCtrl.navigateRoot(['./tabs'])
 
