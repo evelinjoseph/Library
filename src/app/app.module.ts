@@ -15,6 +15,7 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +30,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     SplashScreen,
     BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FirestoreSettingsToken, useValue: {} }
+    { provide: FirestoreSettingsToken, useValue: {} },
+    UserService
+
   ],
   bootstrap: [AppComponent]
 })

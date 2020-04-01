@@ -4,6 +4,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+
+  <ion-item *ngFor="let item of ((userItems | async)?.cart)">
+   
+    <ion-card>
+     <ion-item>
+       <ion-icon name="book" slot="start"></ion-icon>
+       <ion-label>{{item.itemName}}</ion-label>
+           <ion-button  (click)="delete(item.itemName)" fill="outline" slot="end">Delete</ion-button>
+     </ion-item>
+   
+     <ion-card-content>
+       Description Coming Soon!
+     </ion-card-content>
+   </ion-card>
+ </ion-item>
+
 
 </ion-content>
+<ion-footer no-shadow>
+  <ion-toolbar position="bottom" style="text-align: center"> 
+    <ion-button (click)="checkOut()">Checkout</ion-button>
+  </ion-toolbar>
+</ion-footer>

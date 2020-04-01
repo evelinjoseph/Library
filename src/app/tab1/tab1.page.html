@@ -20,12 +20,23 @@
   
  
   <ion-item *ngFor="let item of resultArr">
-    <ion-label>
-      <ion-note style="font-weight:bold">
-        {{item.itemName}}
-      </ion-note>
-    </ion-label>
+   
+     <ion-card>
+      <ion-item>
+        <ion-icon name="book" slot="start"></ion-icon>
+        <ion-label>{{item.itemName}}</ion-label>
+            <ion-button  (click)="cart(item.itemName)" fill="outline" slot="end">Add to Cart</ion-button>
+      </ion-item>
+    
+      <ion-card-content>
+        Description Coming Soon!
+      </ion-card-content>
+    </ion-card>
   </ion-item>
+
+  
+  
+
 
   
 

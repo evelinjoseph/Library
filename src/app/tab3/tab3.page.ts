@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AngularFirestore, AngularFirestoreCollectionGroup} from '@angular/fire/firestore'
+import { UserService } from '../user.service';
+import { firestore} from 'firebase/app';
 
 @Component({
   selector: 'app-tab3',
@@ -7,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Tab3Page implements OnInit {
 
-  constructor() { }
+  constructor(private afs: AngularFirestore, private user: UserService) {
+
+   
+
+   }
 
   ngOnInit() {
   }

@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { NavController } from '@ionic/angular';
 import { Routes, RouterModule } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore'
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +17,7 @@ export class RegisterPage implements OnInit {
   password: string = "";
   cpassword: string = "";
   
-  constructor(private nacCtrl: NavController, public afAuth: AngularFireAuth) { }
+  constructor(private nacCtrl: NavController, public afAuth: AngularFireAuth, public afstore: AngularFirestore, public user:UserService) { }
 
   ngOnInit() {
   }
@@ -30,6 +32,18 @@ export class RegisterPage implements OnInit {
     try{
 
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+
+      this.afstore.doc(`users/${res.user.uid}`).set({
+        email        
+      })
+      
+      this.user.setUser({
+          email,
+          uid: res.user.uid
+      })
+
+      
+
       console.log(res)
       this.nacCtrl.navigateRoot(["./home"])
 

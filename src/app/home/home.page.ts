@@ -5,6 +5,7 @@ import { CompileNgModuleSummary } from '@angular/compiler';
 import { NavController } from '@ionic/angular';
 import { TabsPage } from '../tabs/tabs.page';
 import { Routes, RouterModule } from '@angular/router';
+import { UserService } from '../user.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class HomePage implements OnInit{
   password: string = "" 
   
   
-  constructor(private nacCtrl: NavController, public afAuth: AngularFireAuth) {}
+  constructor(private nacCtrl: NavController, public afAuth: AngularFireAuth, public user: UserService) {}
 
   ngOnInit(){
 
@@ -30,8 +31,18 @@ export class HomePage implements OnInit{
     try{
 
       const res = await this.afAuth.auth.signInWithEmailAndPassword(email,password)
+      
+      if(res.user){
+        this.user.setUser({
+          email,
+          uid:res.user.uid
+        })
+
+      }
+      
       console.log(res)
       this.nacCtrl.navigateRoot(['./tabs'])
+      
     }
     catch(err){
       console.dir(err)

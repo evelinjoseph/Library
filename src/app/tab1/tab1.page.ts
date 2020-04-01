@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from "@angular/fire/firestore";
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
+import { UserService } from '../user.service';
+import { firestore} from 'firebase/app';
+
 
 @Component({
   selector: 'app-tab1',
@@ -14,9 +17,9 @@ export class Tab1Page implements OnInit {
   scannedData: {};
   barcodeScannerOptions: BarcodeScannerOptions;
 
-  constructor(public fs: AngularFirestore, private barcodeScanner: BarcodeScanner) { 
+  constructor(public fs: AngularFirestore, private barcodeScanner: BarcodeScanner, public user: UserService) { 
     this.barcodeScannerOptions = {
-      preferFrontCamera : true, // iOS and Android
+      preferFrontCamera : false, // iOS and Android
       showFlipCameraButton : true, // iOS and Android
       showTorchButton : true, // iOS and Android
       torchOn: true, // Android, launch with the torch switched on (if available)
@@ -29,6 +32,18 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  cart(itemName: string){
+
+    console.log(itemName)
+    this.fs.doc(`users/${this.user.getUID()}`).update({
+      cart: firestore.FieldValue.arrayUnion({
+        itemName
+      })
+    })
+
+
   }
 
   scanBarcode(){
