@@ -3,6 +3,9 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { UserService } from '../user.service';
 import { firestore} from 'firebase/app';
+import * as firebase from 'firebase/app';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -15,9 +18,10 @@ export class Tab1Page implements OnInit {
   sampleArr=[];
   resultArr=[];
   scannedData: {};
-  barcodeScannerOptions: BarcodeScannerOptions;
+  barcodeScannerOptions: BarcodeScannerOptions; 
+ 
 
-  constructor(public fs: AngularFirestore, private barcodeScanner: BarcodeScanner, public user: UserService) { 
+  constructor(public fs: AngularFirestore, private barcodeScanner: BarcodeScanner, public user: UserService, private router: Router, public alertCtrl: AlertController) { 
     this.barcodeScannerOptions = {
       preferFrontCamera : false, // iOS and Android
       showFlipCameraButton : true, // iOS and Android
@@ -36,14 +40,81 @@ export class Tab1Page implements OnInit {
 
   cart(itemName: string){
 
-    console.log(itemName)
-    this.fs.doc(`users/${this.user.getUID()}`).update({
-      cart: firestore.FieldValue.arrayUnion({
-        itemName
+    firebase.auth().onAuthStateChanged(function(user) {
+      console.log(user);
+      if (user) {
+        
+        var isAnonymous = user.isAnonymous;
+        if(isAnonymous)
+        {
+          
+          alert("Please sign up or log in for this feature!");
+
+        }
+        
+          
+      }
+     else {
+
+     
+        
+        }
+      });
+
+
+    //let btn = document.getElementById(itemName);
+    
+    //if(btn.textContent == 'Add to Cart'){
+
+      this.fs.doc(`users/${this.user.getUID()}`).update({
+        cart: firestore.FieldValue.arrayUnion({
+          itemName
+        })
       })
-    })
+
+      //btn.textContent = 'Remove from Cart';
+      
+    //}
+
+    /*else{
+
+      this.fs.doc(`users/${this.user.getUID()}`).update({
+        cart: firestore.FieldValue.arrayRemove({
+          itemName
+        })
+      })
+
+      btn.textContent = 'Add to Cart';
+      
+    }*/
+
+    
 
 
+  }
+
+  public async presentAlertConfirm() {
+    const alert = await this.alertCtrl.create({
+      header: 'Guest Account',
+      message: 'Please sign up or login to use this feature!',
+      buttons: [
+        {
+          text: 'Sign Up',
+            handler: () => {
+            console.log('Sign Up');
+            this.router.navigateByUrl('/register');
+          }
+        }, {
+          text: 'Login',
+          handler: () => {
+            console.log('Login');
+            this.router.navigateByUrl('/home');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   scanBarcode(){

@@ -17,6 +17,7 @@ import { CheckboxControlValueAccessor } from '@angular/forms';
 export class Tab2Page implements OnInit {
  
   itemName: string
+  isCurrent: boolean
   userItems;
   
   
@@ -58,13 +59,30 @@ export class Tab2Page implements OnInit {
   }
 
   
-  checkOut(){
+  checkOut(cart){
 
-    this.afstore.doc(`users/${this.user.getUID()}`).update({
-      checkedOut: firestore.FieldValue.arrayUnion({
-        //itemName
+    for(var item of cart){ 
+      
+      this.afstore.doc(`users/${this.user.getUID()}`).update({
+        checkedOut: firestore.FieldValue.arrayUnion({
+          itemName: item.itemName,
+          isCurrent: true
+        })
       })
-    })
+
+    }
+
+    var cartRef = this.afstore.collection('users').doc(`${this.user.getUID()}`);
+
+    // Remove the 'cart' field from the document
+    var removeCart = cartRef.update({
+        cart: firebase.firestore.FieldValue.delete()
+    });
+
+
+    console.log("checkout complete!")
+
+   
 
       
 
