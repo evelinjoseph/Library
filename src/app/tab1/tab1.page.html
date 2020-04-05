@@ -34,19 +34,20 @@
     </ion-card>
   </ion-item>
 
-  
-  
 
-
-  
-
-  <div *ngIf="scannedData">
-    <p>
-      Scanned Code Text : <b>{{ scannedData["text"] }}</b>
-    </p>
-    <p>
-      Scanned Code Format : <b>{{ scannedData["format"] }}</b>
-    </p>
-  </div>
+  <ion-item *ngFor="let item of scanArr">
+   
+    <ion-card>
+     <ion-item>
+       <ion-icon name="book" slot="start"></ion-icon>
+       <ion-label>{{item.itemName}}</ion-label>
+           <ion-button id={{item.itemName}} (click)="cart(item.itemName)" fill="outline" slot="end">Add to Cart</ion-button>
+     </ion-item>
+   
+     <ion-card-content>
+       Description Coming Soon!
+     </ion-card-content>
+   </ion-card>
+ </ion-item>
 
 </ion-content>

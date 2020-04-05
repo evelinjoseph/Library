@@ -79,7 +79,6 @@ export class Tab2Page implements OnInit {
         cart: firebase.firestore.FieldValue.delete()
     });
 
-
     console.log("checkout complete!")
 
    

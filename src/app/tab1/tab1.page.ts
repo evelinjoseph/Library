@@ -18,6 +18,7 @@ export class Tab1Page implements OnInit {
   sampleArr=[];
   resultArr=[];
   scannedData: {};
+  scanArr=[];
   barcodeScannerOptions: BarcodeScannerOptions; 
  
 
@@ -72,7 +73,7 @@ export class Tab1Page implements OnInit {
         })
       })
 
-      //btn.textContent = 'Remove from Cart';
+    //btn.textContent = 'Remove from Cart';
       
     //}
 
@@ -121,19 +122,65 @@ export class Tab1Page implements OnInit {
     this.barcodeScanner
       .scan()
       .then(barcodeData => {
-        alert("Barcode data " + JSON.stringify(barcodeData));
         this.scannedData = barcodeData;
+
+        this.fs.collection('item', ref => ref.where('ISBN-13', '==', this.scannedData["text"])).snapshotChanges()
+        .subscribe(data => {
+          data.forEach(childData => {
+            console.log(childData.payload.doc.data())
+            this.scanArr.push(childData.payload.doc.data())            
+  
+          })
+        })
+       
+        
       })
       .catch(err => {
         console.log("Error", err);
       });
 
+      this.scanArr = [];
+
+      
+      
+      /*this.fs.collection("scan").doc("scan1").set({
+        ISBN: this.scannedData['text']
+        
+      })    
+
+      
+      this.fs.collection('item', ref => ref.where('ISBN-13', '==', this.scannedData["text"])).snapshotChanges()
+      .subscribe(data => {
+        data.forEach(childData => {
+          this.scanArr.push(childData.payload.doc.data())
+
+        })
+      })
+
+      console.log(this.scanArr.pop().itemName)
+
+
+      this.fs.collection("item").ref.where('ISBN-13', '==', this.scannedData["text"])
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });*/
+
+    
   }
 
   search(event){
 
     let searchKey: string = event.target.value;
     let firstLetter = searchKey.toUpperCase();
+
+    this.scanArr = [];
 
     if(searchKey.length==0){
       this.sampleArr=[];
