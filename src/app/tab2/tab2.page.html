@@ -9,9 +9,9 @@
   <ion-item *ngFor="let item of ((userItems | async)?.cart)">
    
     <ion-card>
-     <ion-item>
+     <ion-item class="ion-text-wrap">
        <ion-icon name="book" slot="start"></ion-icon>
-       <ion-label>{{item.itemName}}</ion-label>
+       <ion-label class="ion-text-wrap">{{item.itemName}}</ion-label>
            <ion-button  (click)="delete(item.itemName)" fill="outline" slot="end">Delete</ion-button>
      </ion-item>
    
@@ -20,9 +20,34 @@
      </ion-card-content>
    </ion-card>
  </ion-item>
+
+ <ion-grid *ngIf="((userItems | async)?.cart).length <= 0"> 
+
+  <ion-row >
+    <ion-col >
+      
+      <ion-icon class="large" color="primary" name="cart"></ion-icon>
+   
+  </ion-col>
+  </ion-row>  
+  
+  <ion-row text-center> 
+  <ion-col text-center>
+    <ion-text color="primary">
+      <h2>There are no items in the cart!</h2>
+    </ion-text>
+  </ion-col>
+  </ion-row>
+   
+
+
+</ion-grid>
+
 </ion-content>
 
-<ion-footer  no-shadow>
+
+
+<ion-footer *ngIf="((userItems | async)?.cart).length > 0" no-shadow>
   <!--*ngIf="((userItems | async)?.cart).length > 0"-->
   <ion-toolbar *ngIf="userItems | async as cartData"  position="bottom" style="text-align: center"> 
     
@@ -30,3 +55,4 @@
   </ion-toolbar>
 
 </ion-footer>
+

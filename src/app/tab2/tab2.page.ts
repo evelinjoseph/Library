@@ -59,31 +59,44 @@ export class Tab2Page implements OnInit {
   }
 
   
-  checkOut(cart){
+  public async checkOut(cart){
 
-    for(var item of cart){ 
+
+    const confirm = await this.presentAlertCheck();
+
+    if (confirm) {
+
+      for(var item of cart){ 
       
-      this.afstore.doc(`users/${this.user.getUID()}`).update({
-        checkedOut: firestore.FieldValue.arrayUnion({
-          itemName: item.itemName,
-          isCurrent: true
+        this.afstore.doc(`users/${this.user.getUID()}`).update({
+          checkedOut: firestore.FieldValue.arrayUnion({
+            itemName: item.itemName,
+            isCurrent: true
+          })
         })
-      })
 
+        this.afstore.doc(`users/${this.user.getUID()}`).update({
+          cart: firestore.FieldValue.arrayRemove({
+            itemName: item.itemName
+          })
+        })
+
+        
+  
+      }
+  
+      /*var cartRef = this.afstore.collection('users').doc(`${this.user.getUID()}`);
+  
+      // Remove the 'cart' field from the document
+      var removeCart = cartRef.update({
+          cart: firebase.firestore.FieldValue.delete()
+      });*/
+
+     
+  
+      console.log("checkout complete!")
     }
-
-    var cartRef = this.afstore.collection('users').doc(`${this.user.getUID()}`);
-
-    // Remove the 'cart' field from the document
-    var removeCart = cartRef.update({
-        cart: firebase.firestore.FieldValue.delete()
-    });
-
-    console.log("checkout complete!")
-
-   
-
-      
+     
 
   }
 
@@ -148,6 +161,27 @@ export class Tab2Page implements OnInit {
     return promise;
   }
 
+  public async presentAlertCheck() : Promise<boolean> {
+    let resolveFunction: (confirm: boolean) => void;
+    const promise = new Promise<boolean>(resolve => {
+      resolveFunction = resolve;
+    });
+    const alert = await this.alertCtrl.create({
+      header: 'Confirm Check-Out',
+      message: 'Are you sure you want to check out these items from your cart?',
+      buttons: [
+        {
+          text: 'Yes',
+            handler: () => resolveFunction(true)
+        }, {
+          text: 'No',
+          handler: () => resolveFunction(false)
+        }
+      ]
+    });
 
+    await alert.present();
+    return promise;
+  }
 
 }

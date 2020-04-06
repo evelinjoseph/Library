@@ -69,7 +69,7 @@ export class Tab1Page implements OnInit {
 
       this.fs.doc(`users/${this.user.getUID()}`).update({
         cart: firestore.FieldValue.arrayUnion({
-          itemName
+          itemName,
         })
       })
 
@@ -185,9 +185,12 @@ export class Tab1Page implements OnInit {
     if(searchKey.length==0){
       this.sampleArr=[];
       this.resultArr=[];
+      this.scanArr = [];
 
     }
     if(this.sampleArr.length == 0){
+
+      this.scanArr = [];
 
       this.fs.collection('item', ref => ref.where('SearchIndex', '==', firstLetter)).snapshotChanges()
       .subscribe(data => {
@@ -199,6 +202,8 @@ export class Tab1Page implements OnInit {
     }
 
     else{
+
+      this.scanArr = [];
       this.resultArr=[];
       this.sampleArr.forEach(val=>{
         let name:string=val['itemName'];
