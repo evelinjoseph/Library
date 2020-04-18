@@ -42,7 +42,7 @@
   <!--*ngIf="((userItems | async)?.cart).length > 0"-->
   <ion-toolbar *ngIf="userItems | async as returnData"  position="bottom" style="text-align: center"> 
     
-    <ion-button (click)="return(cartData.cart)">Return</ion-button>
+    <ion-button (click)="return(returnData.checkedOut)">Return</ion-button>
   </ion-toolbar>
 
 </ion-footer>

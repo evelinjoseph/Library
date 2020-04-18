@@ -7,6 +7,8 @@ import * as firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CheckboxControlValueAccessor } from '@angular/forms';
+import { format, formatDistance, formatRelative, subDays, addWeeks} from 'date-fns';
+
 
 
 @Component({
@@ -18,6 +20,8 @@ export class Tab2Page implements OnInit {
  
   itemName: string
   isCurrent: boolean
+  date: Date
+  returnDate: Date
   userItems;
   
   
@@ -71,7 +75,9 @@ export class Tab2Page implements OnInit {
         this.afstore.doc(`users/${this.user.getUID()}`).update({
           checkedOut: firestore.FieldValue.arrayUnion({
             itemName: item.itemName,
-            isCurrent: true
+            isCurrent: true,
+            date: new Date(),
+            returnDate: addWeeks(new Date(), 2)
           })
         })
 
@@ -168,7 +174,7 @@ export class Tab2Page implements OnInit {
     });
     const alert = await this.alertCtrl.create({
       header: 'Confirm Check-Out',
-      message: 'Are you sure you want to check out these items from your cart?',
+      message: 'Are you sure you want to check out these items from your cart? Return by: ' + addWeeks(new Date(), 2),
       buttons: [
         {
           text: 'Yes',
