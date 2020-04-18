@@ -4,6 +4,45 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+
+  <ion-item *ngFor="let item of ((userItems | async)?.checkedOut)">
+   
+    <ion-card>
+     <ion-item class="ion-text-wrap">
+       <ion-icon name="book" slot="start"></ion-icon>
+       <ion-label class="ion-text-wrap">{{item.itemName}}</ion-label>
+           <ion-button  (click)="select(item.itemName)" fill="outline" slot="end">Select</ion-button>
+     </ion-item>
+   
+     <ion-card-content>
+       Description Coming Soon!
+     </ion-card-content>
+   </ion-card>
+ </ion-item>
+
+ <ion-grid *ngIf="((userItems | async)?.checkedOut).length <= 0"> 
+
+    
+  <ion-row text-center> 
+  <ion-col text-center>
+    <ion-text color="primary">
+      <h2>There are no items checked-out!</h2>
+    </ion-text>
+  </ion-col>
+  </ion-row>
+   
+
+
+</ion-grid>
 
 </ion-content>
+
+<ion-footer *ngIf="((userItems | async)?.checkedOut).length > 0" no-shadow>
+  <!--*ngIf="((userItems | async)?.cart).length > 0"-->
+  <ion-toolbar *ngIf="userItems | async as returnData"  position="bottom" style="text-align: center"> 
+    
+    <ion-button (click)="return(cartData.cart)">Return</ion-button>
+  </ion-toolbar>
+
+</ion-footer>

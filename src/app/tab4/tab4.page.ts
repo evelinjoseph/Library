@@ -3,20 +3,15 @@ import {AngularFirestore, AngularFirestoreCollectionGroup} from '@angular/fire/f
 import { UserService } from '../user.service';
 import { firestore} from 'firebase/app';
 import * as firebase from 'firebase/app';
-import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-tab3',
-  templateUrl: './tab3.page.html',
-  styleUrls: ['./tab3.page.scss'],
+  selector: 'app-tab4',
+  templateUrl: './tab4.page.html',
+  styleUrls: ['./tab4.page.scss'],
 })
-export class Tab3Page implements OnInit {
+export class Tab4Page implements OnInit {
 
-  itemName: string
-  isCurrent: boolean
-  userItems;
-
-  constructor(private afstore: AngularFirestore, private user: UserService) {
+  constructor(private afs: AngularFirestore, private user: UserService) { 
 
     firebase.auth().onAuthStateChanged(function(user) {
       console.log(user);
@@ -37,12 +32,10 @@ export class Tab3Page implements OnInit {
         
         }
       });
-
-      const items = afstore.doc(`users/${this.user.getUID()}`)
-      this.userItems = items.valueChanges()
    
 
-   }
+
+  }
 
   ngOnInit() {
   }
