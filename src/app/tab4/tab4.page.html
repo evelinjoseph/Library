@@ -4,6 +4,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+
+  <app-account
+     *ngFor="let technology of technologies" 
+     name="{{ technology.name }}" 
+     
+     (change)="captureName($event)"></app-account>
 
 </ion-content>

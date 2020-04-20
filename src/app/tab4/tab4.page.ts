@@ -4,12 +4,35 @@ import { UserService } from '../user.service';
 import { firestore} from 'firebase/app';
 import * as firebase from 'firebase/app';
 
+
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
 export class Tab4Page implements OnInit {
+
+  /**
+ * The data structure that will be used for supplying the account content
+ * @public
+ * @property technologies
+ * @type {Array}
+ */
+public technologies : Array<{ name: string }> = [
+  { 
+    name : 'Book History' 
+    
+ },
+  { 
+    name : 'Account Fees' 
+    
+ },
+  { 
+    name : 'User Settings' 
+    
+ }
+];
+
 
   constructor(private afs: AngularFirestore, private user: UserService) { 
 
@@ -25,6 +48,8 @@ export class Tab4Page implements OnInit {
           
 
         }
+
+        
         
           
       }
@@ -39,5 +64,12 @@ export class Tab4Page implements OnInit {
 
   ngOnInit() {
   }
+
+  public captureName(event: any) : void
+  {
+     console.log(`Captured name by event value: ${event}`);
+  }
+
+  
 
 }
