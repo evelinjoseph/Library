@@ -12,29 +12,8 @@ import * as firebase from 'firebase/app';
 })
 export class Tab4Page implements OnInit {
 
-  /**
- * The data structure that will be used for supplying the account content
- * @public
- * @property technologies
- * @type {Array}
- */
-public technologies : Array<{ name: string }> = [
-  { 
-    name : 'Book History' 
-    
- },
-  { 
-    name : 'Account Fees' 
-    
- },
-  { 
-    name : 'User Settings' 
-    
- }
-];
 
-
-  constructor(private afs: AngularFirestore, private user: UserService) { 
+  constructor(private afstore: AngularFirestore, private user: UserService) { 
 
     firebase.auth().onAuthStateChanged(function(user) {
       console.log(user);
@@ -48,17 +27,14 @@ public technologies : Array<{ name: string }> = [
           
 
         }
-
-        
-        
-          
+ 
       }
      else {
         
         }
       });
-   
 
+     
 
   }
 

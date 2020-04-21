@@ -1,18 +1,88 @@
-<h2 (click)="toggleAccordion()">
+ <!--<h2 (click)="toggleAccordion()">
   {{ name }}
    <span *ngIf="isMenuOpen">&#9650;</span>
    <span *ngIf="!isMenuOpen">&#9660;</span>
 </h2>
 <div 
    [ngClass]="this.isMenuOpen ? 'active' : 'inactive'">
-   <!--<section class="image-wrapper">
+  <section class="image-wrapper">
    	  <img [src]="image">
-   </section>
-   <p>{{ description }}</p>-->
+   </section> 
+   <p>{{ description }}</p>
    <ion-button 
       type="button" 
       color="primary" 
       fill="solid" 
       size="default" 
       (click)="broadcastName(name)">Console log me!</ion-button>
-</div>
+</div> --> 
+
+<h2 (click)="toggleAccordion()">
+   Book History
+    <span *ngIf="isMenuOpen">&#9650;</span>
+    <span *ngIf="!isMenuOpen">&#9660;</span>
+ </h2>
+ <div 
+    [ngClass]="this.isMenuOpen ? 'active' : 'inactive'">
+    
+       
+    <ion-card *ngFor = "let book of ((bookHistory|async)?.checkedOut)">
+      <ion-item class="ion-text-wrap">
+        <ion-icon name="book" slot="start"></ion-icon>
+        <ion-label class="ion-text-wrap">{{book.itemName}}</ion-label>
+      </ion-item>  
+
+      <!--<ion-card-content>
+         Due: {{book.returnDate}}
+       </ion-card-content>-->
+     </ion-card> 
+    
+      
+      <ion-card *ngFor = "let book of ((bookHistory|async)?.Returned)">
+       <ion-item class="ion-text-wrap">
+         <ion-icon name="book" slot="start"></ion-icon>
+         <ion-label class="ion-text-wrap">{{book.itemName}}</ion-label>
+       </ion-item>  
+      </ion-card>
+   
+ </div>
+
+
+
+ <h2 (click)="toggleAccordion2()">
+   Account Fees
+    <span *ngIf="isMenuOpen2">&#9650;</span>
+    <span *ngIf="!isMenuOpen2">&#9660;</span>
+ </h2>
+ <div 
+    [ngClass]="this.isMenuOpen2 ? 'active' : 'inactive'">
+    
+    <ion-text>
+      Your fees are:
+    </ion-text>
+    <p>{{ fees }}</p>
+ </div>
+
+ <h2 (click)="toggleAccordion3()">
+   User Settings
+    <span *ngIf="isMenuOpen3">&#9650;</span>
+    <span *ngIf="!isMenuOpen3">&#9660;</span>
+ </h2>
+ <div 
+    [ngClass]="this.isMenuOpen3 ? 'active' : 'inactive'">
+    
+      <ion-item>    
+            <ion-label position = "floating">
+              Email Address
+            </ion-label>
+            <ion-input type = "text" [(ngModel)]="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position = "floating">
+              Password
+            </ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        
+ </div>

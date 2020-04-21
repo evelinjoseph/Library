@@ -6,10 +6,16 @@
 
 <ion-content padding>
 
-  <app-account
-     *ngFor="let technology of technologies" 
-     name="{{ technology.name }}" 
-     
+  <app-account 
      (change)="captureName($event)"></app-account>
 
 </ion-content>
+
+<ion-footer no-shadow>
+  
+  <ion-toolbar position="bottom" style="text-align: center"> 
+    
+    <ion-button [routerDirection] = "'forward'" [routerLink]="['/home']">Sign Out</ion-button>
+  </ion-toolbar>
+
+</ion-footer>
