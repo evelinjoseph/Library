@@ -32,9 +32,9 @@
         <ion-label class="ion-text-wrap">{{book.itemName}}</ion-label>
       </ion-item>  
 
-      <!--<ion-card-content>
-         Due: {{book.returnDate}}
-       </ion-card-content>-->
+      <ion-card-content>
+         Due: {{book.returnDate.toDate()}}
+       </ion-card-content>
      </ion-card> 
     
       

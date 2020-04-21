@@ -25,13 +25,10 @@ export class Tab3Page implements OnInit {
         
         var isAnonymous = user.isAnonymous;
         if(isAnonymous)
-        {
-          
-          alert("Please sign up or log in for this feature!")
-          
+        {          
+          alert("Please sign up or log in for this feature!")          
 
-        }
-        
+        }        
           
       }
      else {
@@ -42,7 +39,6 @@ export class Tab3Page implements OnInit {
       const items = afstore.doc(`users/${this.user.getUID()}`)
       this.userItems = items.valueChanges()
    
-
    }
 
   ngOnInit() {
