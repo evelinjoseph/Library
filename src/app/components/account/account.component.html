@@ -25,7 +25,10 @@
  <div 
     [ngClass]="this.isMenuOpen ? 'active' : 'inactive'">
     
-       
+    <ion-text *ngIf="((bookHistory | async)?.checkedOut).length > 0"  >
+      Currently Checked-Out:
+    </ion-text>
+    
     <ion-card *ngFor = "let book of ((bookHistory|async)?.checkedOut)">
       <ion-item class="ion-text-wrap">
         <ion-icon name="book" slot="start"></ion-icon>
@@ -33,10 +36,13 @@
       </ion-item>  
 
       <ion-card-content>
-         Due: {{book.returnDate.toDate()}}
+         Return by: {{book.returnDate.toDate()}}
        </ion-card-content>
      </ion-card> 
-    
+
+     <ion-text *ngIf="((bookHistory| async)?.Returned).length > 0"  >
+      Previously Checked-Out:
+    </ion-text>    
       
       <ion-card *ngFor = "let book of ((bookHistory|async)?.Returned)">
        <ion-item class="ion-text-wrap">
@@ -58,7 +64,7 @@
     [ngClass]="this.isMenuOpen2 ? 'active' : 'inactive'">
     
     <ion-text>
-      Your fees are:
+      There are currently no fees associated with your account.
     </ion-text>
     <p>{{ fees }}</p>
  </div>

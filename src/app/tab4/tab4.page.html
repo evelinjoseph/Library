@@ -15,7 +15,7 @@
   
   <ion-toolbar position="bottom" style="text-align: center"> 
     
-    <ion-button [routerDirection] = "'forward'" [routerLink]="['/home']">Sign Out</ion-button>
+    <ion-button (click)="signOut()" >Sign Out</ion-button>
   </ion-toolbar>
 
 </ion-footer>
