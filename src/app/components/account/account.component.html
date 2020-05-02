@@ -1,22 +1,3 @@
- <!--<h2 (click)="toggleAccordion()">
-  {{ name }}
-   <span *ngIf="isMenuOpen">&#9650;</span>
-   <span *ngIf="!isMenuOpen">&#9660;</span>
-</h2>
-<div 
-   [ngClass]="this.isMenuOpen ? 'active' : 'inactive'">
-  <section class="image-wrapper">
-   	  <img [src]="image">
-   </section> 
-   <p>{{ description }}</p>
-   <ion-button 
-      type="button" 
-      color="primary" 
-      fill="solid" 
-      size="default" 
-      (click)="broadcastName(name)">Console log me!</ion-button>
-</div> --> 
-
 <h2 (click)="toggleAccordion()">
    Book History
     <span *ngIf="isMenuOpen">&#9650;</span>
@@ -76,19 +57,39 @@
  </h2>
  <div 
     [ngClass]="this.isMenuOpen3 ? 'active' : 'inactive'">
-    
-      <ion-item>    
-            <ion-label position = "floating">
+        
+    <ion-item *ngIf="bookHistory | async as accountInfo">    
+      <ion-label position = "fixed" class="ion-text-wrap">
+        Name
+      </ion-label>
+
+      <ion-textarea placeholder={{accountInfo.name}} [readonly]="isReadonly()" [(ngModel)]="name" ></ion-textarea>
+ 
+    </ion-item>
+
+    <ion-item *ngIf="bookHistory | async as accountInfo">    
+            <ion-label position = "fixed" class="ion-text-wrap">
               Email Address
             </ion-label>
-            <ion-input type = "text" [(ngModel)]="email"></ion-input>
-        </ion-item>
+            <ion-textarea placeholder={{accountInfo.email}} [readonly]=true  ></ion-textarea>
+    </ion-item>
 
-        <ion-item>
-            <ion-label position = "floating">
+    <ion-item *ngIf="bookHistory | async as accountInfo">
+            <ion-label position = "fixed" class="ion-text-wrap">
               Password
             </ion-label>
-            <ion-input type="password" [(ngModel)]="password"></ion-input>
-        </ion-item>
+            <ion-textarea placeholder={{accountInfo.password}} [readonly]=true ></ion-textarea>
+    </ion-item>
+
+    <ion-footer no-shadow>      
+    <ion-button
+      type="button" 
+      color="primary" 
+      fill="solid" 
+      size="default" 
+      (click)="edit()">{{buttonText}}
+    </ion-button>
+  </ion-footer>
+        
         
  </div>

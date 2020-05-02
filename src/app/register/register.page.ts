@@ -13,6 +13,7 @@ import { UserService } from '../user.service';
 })
 export class RegisterPage implements OnInit {
 
+  name: string = "";
   email: string = "";
   password: string = "";
   cpassword: string = "";
@@ -24,7 +25,7 @@ export class RegisterPage implements OnInit {
 
   async register() {
 
-    const { email, password, cpassword} = this
+    const { name, email, password, cpassword} = this
     if(password !== cpassword){
       return console.error("Passwords don't match")
     }
@@ -34,7 +35,9 @@ export class RegisterPage implements OnInit {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
 
       this.afstore.doc(`users/${res.user.uid}`).set({
-        email        
+        email,
+        name,
+        password      
       })
       
       this.user.setUser({

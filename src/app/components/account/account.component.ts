@@ -20,48 +20,15 @@ export class AccountComponent implements OnInit {
    * @type {string}
    */
   @Input()
-  name : string;
-
-  @Input()
   bookHistory;
 
   @Input()
   fees : string;
-  
 
-
-  /**
-   * The description of the technology that will be displayed within the accordion body (when activated 
-   * by the user)
-   * @public
-   * @property description
-   * @type {string}
-   
-  @Input()
-  description : string;*/
-
-
-  /**
-   * The official logo identifying the technology that will be displayed within the accordion body (when activated 
-   * by the user)
-   * @public
-   * @property image
-   * @type {string}
-   
-  @Input()
-  image : string;
-*/
-
-  /**
-   * The change event that will be broadcast to the parent component when the user interacts with the component's 
-   * <ion-button> element
-   * @public
-   * @property change
-   * @type {EventEmitter}
-   */
-  @Output()
-  change : EventEmitter<string> = new EventEmitter<string>();
-
+  buttonText: string = "Edit";
+  name: string = "";
+  email: string = "";
+  password: string = "";
 
   /**
    * Determines and stores the accordion state (I.e. opened or closed)
@@ -72,12 +39,12 @@ export class AccountComponent implements OnInit {
   public isMenuOpen : boolean = false;
   public isMenuOpen2 : boolean = false;
   public isMenuOpen3 : boolean = false;
+  public isRead: boolean = true;
 
   constructor(private afstore: AngularFirestore, private user: UserService) {
 
     const items = afstore.doc(`users/${this.user.getUID()}`)
-    this.bookHistory= items.valueChanges();
-     
+    this.bookHistory= items.valueChanges();  
 
    }
 
@@ -106,16 +73,58 @@ export class AccountComponent implements OnInit {
       this.isMenuOpen3 = !this.isMenuOpen3;
   }
 
+  isReadonly() {
+    return this.isRead;   //return true/false 
+  }
 
-  /**
-   * Allows the value for the <ion-button> element to be broadcast to the parent component
-   * @public
-   * @method broadcastName
-   * @returns {none}
-   */
-  public broadcastName(name : string) : void
+
+
+
+  public edit() : void
   {
-     this.change.emit(name);
+
+    if(this.buttonText == 'Edit'){
+
+      this.isRead = false;
+      this.buttonText = "Save Changes";
+
+
+    }
+    else{
+
+      const { name} = this
+      if(name.trim().length != 0){
+
+        var user1 = firebase.auth().currentUser;
+
+      try{
+
+        this.afstore.doc(`users/${user1.uid}`).update({
+          
+          name
+               
+        })       
+  
+          
+      }catch(error){
+  
+        console.dir(error)
+      }
+      
+
+      }
+
+      else{
+
+       alert("Please enter a value for name");
+       
+      }
+      this.isRead = true;
+      this.buttonText = "Edit";     
+
+      
+    }
+    
   }
 
 }
