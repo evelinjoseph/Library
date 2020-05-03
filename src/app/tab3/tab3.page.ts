@@ -5,6 +5,7 @@ import { firestore} from 'firebase/app';
 import * as firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { format, formatDistance, formatRelative, subDays, addWeeks} from 'date-fns';
+import { Button } from 'protractor';
 
 @Component({
   selector: 'app-tab3',
@@ -16,6 +17,7 @@ export class Tab3Page implements OnInit {
   itemName: string
   isCurrent: boolean
   userItems;
+  btnText: string = 'Select';
 
   constructor(private afstore: AngularFirestore, private user: UserService, public alertCtrl: AlertController) {
 
@@ -44,6 +46,25 @@ export class Tab3Page implements OnInit {
   ngOnInit() {
   }
 
+  public select(item){
+
+    this.afstore.doc(`users/${this.user.getUID()}`).update({
+      Selected: firestore.FieldValue.arrayUnion({
+        itemName: item.itemName,
+        isCurrent: true,
+        date: item.date,
+        returnDate: item.returnDate       
+      })
+    })
+
+
+    
+    let  Btn  =  document.getElementById(item.itemName);
+    Btn.textContent = 'Selected';
+
+    
+  }
+
   public async return(checkedOut){
 
     const confirm = await this.presentAlertReturn();
@@ -51,12 +72,25 @@ export class Tab3Page implements OnInit {
     if (confirm) {
 
       for(var item of checkedOut){ 
+
+        if(item.returnDate.toDate() < new Date()){
+
+          const increment = firebase.firestore.FieldValue.increment(0.35);
+
+          this.afstore.doc(`users/${this.user.getUID()}`).update({
+            fees: increment
+          })
+
+          alert("There has been a fine added to your account associated with your return of " + item.itemName);
+
+        }
+
       
         this.afstore.doc(`users/${this.user.getUID()}`).update({
           Returned: firestore.FieldValue.arrayUnion({
             itemName: item.itemName,
             isCurrent: false,
-            returndate: new Date()
+            returnDate: new Date()
            
           })
         })
@@ -70,20 +104,75 @@ export class Tab3Page implements OnInit {
           })
         })
 
+        this.afstore.doc(`users/${this.user.getUID()}`).update({
+          Selected: firestore.FieldValue.arrayRemove({
+            itemName: item.itemName,
+            isCurrent: true,
+            date: item.date,
+            returnDate: item.returnDate            
+          })
+        }) 
+        
+        
+
         
   
       }
-  
-       
-  
       console.log("return complete!")
     }
      
-
-
-
-
   }
+
+  public async returnSelected(checkedOut){
+
+    const confirm = await this.presentAlertReturn();
+
+    if (confirm) {
+
+      for(var item of checkedOut){ 
+
+        if(item.returnDate.toDate() < new Date()){
+
+          const increment = firebase.firestore.FieldValue.increment(0.35);
+
+          this.afstore.doc(`users/${this.user.getUID()}`).update({
+            fees: increment
+          })
+
+        }
+      
+        this.afstore.doc(`users/${this.user.getUID()}`).update({
+          Returned: firestore.FieldValue.arrayUnion({
+            itemName: item.itemName,
+            isCurrent: false,
+            returnDate: new Date()
+           
+          })
+        })
+
+        this.afstore.doc(`users/${this.user.getUID()}`).update({
+          checkedOut: firestore.FieldValue.arrayRemove({
+            itemName: item.itemName,
+            isCurrent: true,
+            date: item.date,
+            returnDate: item.returnDate            
+          })
+        })
+
+        this.afstore.doc(`users/${this.user.getUID()}`).update({
+          Selected: firestore.FieldValue.arrayRemove({
+            itemName: item.itemName,
+            isCurrent: true,
+            date: item.date,
+            returnDate: item.returnDate            
+          })
+        })
+      }
+      console.log("return complete!")
+    }
+  }
+
+
 
   public async presentAlertReturn() : Promise<boolean> {
     let resolveFunction: (confirm: boolean) => void;

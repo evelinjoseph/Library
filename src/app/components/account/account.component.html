@@ -44,10 +44,10 @@
  <div 
     [ngClass]="this.isMenuOpen2 ? 'active' : 'inactive'">
     
-    <ion-text>
+    <ion-text *ngIf="((bookHistory| async)?.fees) == 0"  >
       There are currently no fees associated with your account.
     </ion-text>
-    <p>{{ fees }}</p>
+    <ion-text *ngIf="bookHistory | async as accountInfo" >Your total fees are : ${{ accountInfo.fees }} </ion-text>
  </div>
 
  <h2 (click)="toggleAccordion3()">

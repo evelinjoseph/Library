@@ -22,8 +22,7 @@ export class AccountComponent implements OnInit {
   @Input()
   bookHistory;
 
-  @Input()
-  fees : string;
+  
 
   buttonText: string = "Edit";
   name: string = "";
@@ -86,7 +85,7 @@ export class AccountComponent implements OnInit {
     if(this.buttonText == 'Edit'){
 
       this.isRead = false;
-      this.buttonText = "Save Changes";
+      this.buttonText = "Save";
 
 
     }

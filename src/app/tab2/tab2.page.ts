@@ -7,7 +7,7 @@ import * as firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CheckboxControlValueAccessor } from '@angular/forms';
-import { format, formatDistance, formatRelative, subDays, addWeeks} from 'date-fns';
+import { format, formatDistance, formatRelative, subDays, addWeeks, addSeconds} from 'date-fns';
 
 
 
@@ -77,7 +77,7 @@ export class Tab2Page implements OnInit {
             itemName: item.itemName,
             isCurrent: true,
             date: new Date(),
-            returnDate: addWeeks(new Date(), 2)
+            returnDate: addSeconds(new Date(), 2)
           })
         })
 
@@ -174,7 +174,7 @@ export class Tab2Page implements OnInit {
     });
     const alert = await this.alertCtrl.create({
       header: 'Confirm Check-Out',
-      message: 'Are you sure you want to check out these items from your cart? Return by: ' + addWeeks(new Date(), 2),
+      message: 'Are you sure you want to check out these items from your cart? Return by: ' + addSeconds(new Date(), 2),
       buttons: [
         {
           text: 'Yes',

@@ -17,6 +17,9 @@ export class RegisterPage implements OnInit {
   email: string = "";
   password: string = "";
   cpassword: string = "";
+  checkedOut;
+  Returned;
+  fees = 0.00;
   
   constructor(private nacCtrl: NavController, public afAuth: AngularFireAuth, public afstore: AngularFirestore, public user:UserService) { }
 
@@ -25,7 +28,7 @@ export class RegisterPage implements OnInit {
 
   async register() {
 
-    const { name, email, password, cpassword} = this
+    const { name, email, password, cpassword, fees} = this
     if(password !== cpassword){
       return console.error("Passwords don't match")
     }
@@ -37,7 +40,12 @@ export class RegisterPage implements OnInit {
       this.afstore.doc(`users/${res.user.uid}`).set({
         email,
         name,
-        password      
+        password,
+        checkedOut: [],
+        Returned: [],
+        fees
+
+
       })
       
       this.user.setUser({
