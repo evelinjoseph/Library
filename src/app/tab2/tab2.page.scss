@@ -2,3 +2,23 @@
 
     font-size: 128px;
 }
+
+.my-grid {
+    height: 100% !important;
+ }
+
+.ion-row{
+    display: flex !important;
+    align-items: center!important;
+    justify-content: center !important;
+    height: 40%;
+ }
+
+.parent-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-content: center!important;
+    flex-wrap: nowrap !important;
+    
+ }

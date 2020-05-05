@@ -47,7 +47,8 @@
     <ion-text *ngIf="((bookHistory| async)?.fees) == 0"  >
       There are currently no fees associated with your account.
     </ion-text>
-    <ion-text *ngIf="bookHistory | async as accountInfo" >Your total fees are : ${{ accountInfo.fees }} </ion-text>
+    <ion-text *ngIf="bookHistory | async as accountInfo" >Your total fees are : ${{ accountInfo.fees | number:'1.2-2' }} </ion-text>
+    
  </div>
 
  <h2 (click)="toggleAccordion3()">

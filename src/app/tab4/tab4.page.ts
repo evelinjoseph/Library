@@ -14,17 +14,20 @@ import { NavController } from '@ionic/angular';
 export class Tab4Page implements OnInit {
 
 
-  constructor(private afstore: AngularFirestore, private user: UserService, private nacCtrl: NavController) { 
+  constructor(private afstore: AngularFirestore, private user: UserService, public nacCtrl: NavController) { 
 
-    firebase.auth().onAuthStateChanged(function(user) {
-      console.log(user);
-      if (user) {
+    firebase.auth().onAuthStateChanged(function(user1) {
+      console.log(user1);
+      if (user1) {
+
+        console.log(user);
         
-        var isAnonymous = user.isAnonymous;
+        var isAnonymous = user1.isAnonymous;
         if(isAnonymous)
         {
           
           alert("Please sign up or log in for this feature!")
+          nacCtrl.navigateRoot(['./tabs'])  
           
 
         }

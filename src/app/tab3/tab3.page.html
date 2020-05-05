@@ -12,7 +12,7 @@
      <ion-item class="ion-text-wrap">
        <ion-icon name="book" slot="start"></ion-icon>
        <ion-label class="ion-text-wrap">{{item.itemName}}</ion-label>
-           <ion-button id={{item.itemName}} (click)="select(item)" fill="outline" slot="end">Select</ion-button>
+           <ion-button id={{item.itemName}} (click)="select(item, item.itemName)" fill="outline" slot="end">Select</ion-button>
      </ion-item>
    
      <ion-card-content>
@@ -21,11 +21,11 @@
    </ion-card>
  </ion-item>
 
- <ion-grid *ngIf="((userItems | async)?.checkedOut).length <= 0"> 
+ <ion-grid class="my-grid" *ngIf="((userItems | async)?.checkedOut).length <= 0"> 
 
     
-  <ion-row text-center> 
-  <ion-col text-center>
+  <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column"> 
+  <ion-col class = "parent-row">
     <ion-text color="primary">
       <h2>There are no items checked-out!</h2>
     </ion-text>

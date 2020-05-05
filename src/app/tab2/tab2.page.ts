@@ -5,6 +5,7 @@ import { UserService } from '../user.service';
 import { firestore} from 'firebase/app';
 import * as firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CheckboxControlValueAccessor } from '@angular/forms';
 import { format, formatDistance, formatRelative, subDays, addWeeks, addSeconds} from 'date-fns';
@@ -26,7 +27,7 @@ export class Tab2Page implements OnInit {
   
   
   
-  constructor(public afstore: AngularFirestore, public user: UserService, public alertCtrl: AlertController, private router: Router) { 
+  constructor(public nacCtrl: NavController, public afstore: AngularFirestore, public user: UserService, public alertCtrl: AlertController, private router: Router) { 
 
       firebase.auth().onAuthStateChanged(function(user) {
       console.log(user);
@@ -37,6 +38,7 @@ export class Tab2Page implements OnInit {
         {
           
           alert("Please sign up or log in for this feature!")
+          nacCtrl.navigateRoot(['./tabs'])     
           
 
         }

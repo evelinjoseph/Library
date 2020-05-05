@@ -21,18 +21,18 @@
    </ion-card>
  </ion-item>
 
- <ion-grid *ngIf="((userItems | async)?.cart).length <= 0"> 
+ <ion-grid class="my-grid" *ngIf="((userItems | async)?.cart).length <= 0"> 
 
-  <ion-row >
-    <ion-col >
+  <ion-row justify-content-center align-items-center style="height: 50%; flex-direction: column">
+    <ion-col class="parent-row">
       
       <ion-icon class="large" color="primary" name="cart"></ion-icon>
    
   </ion-col>
   </ion-row>  
   
-  <ion-row text-center> 
-  <ion-col text-center>
+  <ion-row justify-content-center align-items-center style="flex-direction: column"> 
+  <ion-col class="parent-row">
     <ion-text color="primary">
       <h2>There are no items in the cart!</h2>
     </ion-text>

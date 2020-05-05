@@ -3,7 +3,7 @@ import {AngularFirestore, AngularFirestoreCollectionGroup} from '@angular/fire/f
 import { UserService } from '../user.service';
 import { firestore} from 'firebase/app';
 import * as firebase from 'firebase/app';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { format, formatDistance, formatRelative, subDays, addWeeks} from 'date-fns';
 import { Button } from 'protractor';
 
@@ -19,7 +19,7 @@ export class Tab3Page implements OnInit {
   userItems;
   btnText: string = 'Select';
 
-  constructor(private afstore: AngularFirestore, private user: UserService, public alertCtrl: AlertController) {
+  constructor(public nacCtrl: NavController, private afstore: AngularFirestore, private user: UserService, public alertCtrl: AlertController) {
 
     firebase.auth().onAuthStateChanged(function(user) {
       console.log(user);
@@ -28,7 +28,8 @@ export class Tab3Page implements OnInit {
         var isAnonymous = user.isAnonymous;
         if(isAnonymous)
         {          
-          alert("Please sign up or log in for this feature!")          
+          alert("Please sign up or log in for this feature!")
+          nacCtrl.navigateRoot(['./tabs'])          
 
         }        
           
@@ -46,21 +47,47 @@ export class Tab3Page implements OnInit {
   ngOnInit() {
   }
 
-  public select(item){
+  public select(item, name){
 
-    this.afstore.doc(`users/${this.user.getUID()}`).update({
-      Selected: firestore.FieldValue.arrayUnion({
-        itemName: item.itemName,
-        isCurrent: true,
-        date: item.date,
-        returnDate: item.returnDate       
+    let  Btn  =  document.getElementById(name);
+    console.log(name);
+    console.log(Btn.textContent);
+
+    if(Btn.textContent == 'Select'){
+
+      this.afstore.doc(`users/${this.user.getUID()}`).update({
+        Selected: firestore.FieldValue.arrayUnion({
+          itemName: item.itemName,
+          isCurrent: true,
+          date: item.date,
+          returnDate: item.returnDate       
+        })
       })
-    })
+  
+         
+      
+      Btn.textContent = 'Selected';
 
 
-    
-    let  Btn  =  document.getElementById(item.itemName);
-    Btn.textContent = 'Selected';
+    }
+
+    else{
+
+      this.afstore.doc(`users/${this.user.getUID()}`).update({
+        Selected: firestore.FieldValue.arrayRemove({
+          itemName: item.itemName,
+          isCurrent: true,
+          date: item.date,
+          returnDate: item.returnDate       
+        })
+      })
+  
+         
+      
+      Btn.textContent = 'Select';
+
+
+    }
 
     
   }
@@ -85,7 +112,6 @@ export class Tab3Page implements OnInit {
 
         }
 
-      
         this.afstore.doc(`users/${this.user.getUID()}`).update({
           Returned: firestore.FieldValue.arrayUnion({
             itemName: item.itemName,
@@ -112,16 +138,14 @@ export class Tab3Page implements OnInit {
             returnDate: item.returnDate            
           })
         }) 
-        
-        
-
-        
   
       }
       console.log("return complete!")
     }
      
   }
+
+  
 
   public async returnSelected(checkedOut){
 
@@ -138,6 +162,8 @@ export class Tab3Page implements OnInit {
           this.afstore.doc(`users/${this.user.getUID()}`).update({
             fees: increment
           })
+
+          alert("There has been a fine added to your account associated with your return of " + item.itemName);
 
         }
       
