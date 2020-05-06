@@ -12,11 +12,11 @@
      <ion-item class="ion-text-wrap">
        <ion-icon name="book" slot="start"></ion-icon>
        <ion-label class="ion-text-wrap">{{item.itemName}}</ion-label>
-           <ion-button  (click)="delete(item.itemName)" fill="outline" slot="end">Delete</ion-button>
+           <ion-button  (click)="delete(item)" fill="outline" slot="end">Delete</ion-button>
      </ion-item>
    
      <ion-card-content>
-       Description Coming Soon!
+      {{item.Description}}
      </ion-card-content>
    </ion-card>
  </ion-item>

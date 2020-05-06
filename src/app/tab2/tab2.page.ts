@@ -9,7 +9,7 @@ import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CheckboxControlValueAccessor } from '@angular/forms';
 import { format, formatDistance, formatRelative, subDays, addWeeks, addSeconds} from 'date-fns';
-
+import { Observable } from 'rxjs'; // also added
 
 
 @Component({
@@ -24,6 +24,8 @@ export class Tab2Page implements OnInit {
   date: Date
   returnDate: Date
   userItems;
+
+  items2: Observable<any[]>;// also added
   
   
   
@@ -52,7 +54,7 @@ export class Tab2Page implements OnInit {
 
       const items = afstore.doc(`users/${this.user.getUID()}`)
       this.userItems = items.valueChanges()
-
+      this.items2 = afstore.collection('item').valueChanges();// what I added
 
     
   }
@@ -77,6 +79,7 @@ export class Tab2Page implements OnInit {
         this.afstore.doc(`users/${this.user.getUID()}`).update({
           checkedOut: firestore.FieldValue.arrayUnion({
             itemName: item.itemName,
+            Description: item.Description,
             isCurrent: true,
             date: new Date(),
             returnDate: addSeconds(new Date(), 2)
@@ -85,7 +88,8 @@ export class Tab2Page implements OnInit {
 
         this.afstore.doc(`users/${this.user.getUID()}`).update({
           cart: firestore.FieldValue.arrayRemove({
-            itemName: item.itemName
+            itemName: item.itemName,
+            Description: item.Description
           })
         })
 
@@ -108,13 +112,15 @@ export class Tab2Page implements OnInit {
 
   }
 
-  public async delete(itemName: string){
+  public async delete(item){
 
     const confirm = await this.presentAlertDelete();
     if (confirm) {
     this.afstore.doc(`users/${this.user.getUID()}`).update({
       cart: firestore.FieldValue.arrayRemove({
-        itemName
+        itemName: item.itemName,
+        Description: item.Description
+
       })
     })
   }

@@ -6,7 +6,7 @@ import { firestore} from 'firebase/app';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-
+import { Observable } from 'rxjs'; // also added
 
 @Component({
   selector: 'app-tab1',
@@ -20,7 +20,7 @@ export class Tab1Page implements OnInit {
   scannedData: {};
   scanArr=[];
   barcodeScannerOptions: BarcodeScannerOptions; 
- 
+  items: Observable<any[]>;// also added
 
   constructor(public fs: AngularFirestore, private barcodeScanner: BarcodeScanner, public user: UserService, private router: Router, public alertCtrl: AlertController) { 
     this.barcodeScannerOptions = {
@@ -34,12 +34,14 @@ export class Tab1Page implements OnInit {
       disableAnimations : true, // iOS
       disableSuccessBeep: false // iOS and Android
     };
+
+    this.items = fs.collection('item').valueChanges(); 
   }
 
   ngOnInit() {
   }
 
-  cart(itemName: string){
+  cart(item){
 
     firebase.auth().onAuthStateChanged(function(user) {
       console.log(user);
@@ -69,7 +71,8 @@ export class Tab1Page implements OnInit {
 
       this.fs.doc(`users/${this.user.getUID()}`).update({
         cart: firestore.FieldValue.arrayUnion({
-          itemName,
+          itemName: item.itemName,
+          Description: item.Description
         })
       })
 

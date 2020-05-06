@@ -25,11 +25,11 @@
       <ion-item>
         <ion-icon name="book" slot="start"></ion-icon>
         <ion-label class="ion-text-wrap">{{item.itemName}}</ion-label>
-            <ion-button id={{item.itemName}} (click)="cart(item.itemName)" fill="outline" slot="end">Add to Cart</ion-button>
+            <ion-button id={{item.itemName}} (click)="cart(item)" fill="outline" slot="end">Add to Cart</ion-button>
       </ion-item>
     
       <ion-card-content>
-        Description Coming Soon!
+        {{item.Description}}
       </ion-card-content>
     </ion-card>
   </ion-item>
@@ -41,11 +41,11 @@
      <ion-item>
        <ion-icon name="book" slot="start"></ion-icon>
        <ion-label class="ion-text-wrap">{{item.itemName}}</ion-label>
-           <ion-button id={{item.itemName}} (click)="cart(item.itemName)" fill="outline" slot="end">Add to Cart</ion-button>
+           <ion-button id={{item.itemName}} (click)="cart(item)" fill="outline" slot="end">Add to Cart</ion-button>
      </ion-item>
    
      <ion-card-content>
-       Description Coming Soon!
+      {{item.Description}}
      </ion-card-content>
    </ion-card>
  </ion-item>
