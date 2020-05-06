@@ -72,7 +72,9 @@ export class Tab1Page implements OnInit {
       this.fs.doc(`users/${this.user.getUID()}`).update({
         cart: firestore.FieldValue.arrayUnion({
           itemName: item.itemName,
-          Description: item.Description
+          Description: item.Description,
+          aFname: item.aFname,
+          aLname: item.aLname
         })
       })
 

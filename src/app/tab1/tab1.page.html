@@ -27,9 +27,12 @@
         <ion-label class="ion-text-wrap">{{item.itemName}}</ion-label>
             <ion-button id={{item.itemName}} (click)="cart(item)" fill="outline" slot="end">Add to Cart</ion-button>
       </ion-item>
+
+      
     
       <ion-card-content>
-        {{item.Description}}
+        <p> Author: {{item.aFname}} {{item.aLname}}</p>
+        <p> Description: {{item.Description}}</p>
       </ion-card-content>
     </ion-card>
   </ion-item>
@@ -45,7 +48,8 @@
      </ion-item>
    
      <ion-card-content>
-      {{item.Description}}
+      <p> Author: {{item.aFname}} {{item.aLname}}</p>
+      <p> Description: {{item.Description}}</p>
      </ion-card-content>
    </ion-card>
  </ion-item>

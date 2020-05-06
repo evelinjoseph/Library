@@ -80,6 +80,8 @@ export class Tab2Page implements OnInit {
           checkedOut: firestore.FieldValue.arrayUnion({
             itemName: item.itemName,
             Description: item.Description,
+            aFname: item.aFname,
+            aLname: item.aLname,
             isCurrent: true,
             date: new Date(),
             returnDate: addSeconds(new Date(), 2)
@@ -89,7 +91,10 @@ export class Tab2Page implements OnInit {
         this.afstore.doc(`users/${this.user.getUID()}`).update({
           cart: firestore.FieldValue.arrayRemove({
             itemName: item.itemName,
-            Description: item.Description
+            Description: item.Description,
+            aFname: item.aFname,
+            aLname: item.aLname
+
           })
         })
 
@@ -119,7 +124,9 @@ export class Tab2Page implements OnInit {
     this.afstore.doc(`users/${this.user.getUID()}`).update({
       cart: firestore.FieldValue.arrayRemove({
         itemName: item.itemName,
-        Description: item.Description
+        Description: item.Description,
+        aFname: item.aFname,
+        aLname: item.aLname
 
       })
     })

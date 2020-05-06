@@ -14,9 +14,12 @@
        <ion-label class="ion-text-wrap">{{item.itemName}}</ion-label>
            <ion-button  (click)="delete(item)" fill="outline" slot="end">Delete</ion-button>
      </ion-item>
+
+     
    
      <ion-card-content>
-      {{item.Description}}
+      <p> Author: {{item.aFname}} {{item.aLname}}</p>
+      <p> Description: {{item.Description}}</p>
      </ion-card-content>
    </ion-card>
  </ion-item>

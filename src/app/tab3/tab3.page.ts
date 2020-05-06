@@ -59,6 +59,8 @@ export class Tab3Page implements OnInit {
         Selected: firestore.FieldValue.arrayUnion({
           itemName: item.itemName,
           Description: item.Description,
+          aFname: item.aFname,
+          aLname: item.aLname,
           isCurrent: true,
           date: item.date,
           returnDate: item.returnDate       
@@ -78,6 +80,8 @@ export class Tab3Page implements OnInit {
         Selected: firestore.FieldValue.arrayRemove({
           itemName: item.itemName,
           Description: item.Description,
+          aFname: item.aFname,
+          aLname: item.aLname,
           isCurrent: true,
           date: item.date,
           returnDate: item.returnDate       
@@ -118,6 +122,8 @@ export class Tab3Page implements OnInit {
           Returned: firestore.FieldValue.arrayUnion({
             itemName: item.itemName,
             Description: item.Description,
+            aFname: item.aFname,
+            aLname: item.aLname,
             isCurrent: false,
             returnDate: new Date()
            
@@ -128,6 +134,8 @@ export class Tab3Page implements OnInit {
           checkedOut: firestore.FieldValue.arrayRemove({
             itemName: item.itemName,
             Description: item.Description,
+            aFname: item.aFname,
+            aLname: item.aLname,
             isCurrent: true,
             date: item.date,
             returnDate: item.returnDate            
@@ -138,6 +146,8 @@ export class Tab3Page implements OnInit {
           Selected: firestore.FieldValue.arrayRemove({
             itemName: item.itemName,
             Description: item.Description,
+            aFname: item.aFname,
+            aLname: item.aLname,
             isCurrent: true,
             date: item.date,
             returnDate: item.returnDate            
@@ -176,6 +186,8 @@ export class Tab3Page implements OnInit {
           Returned: firestore.FieldValue.arrayUnion({
             itemName: item.itemName,
             Description: item.Description,
+            aFname: item.aFname,
+            aLname: item.aLname,
             isCurrent: false,
             returnDate: new Date()
            
@@ -186,6 +198,8 @@ export class Tab3Page implements OnInit {
           checkedOut: firestore.FieldValue.arrayRemove({
             itemName: item.itemName,
             Description: item.Description,
+            aFname: item.aFname,
+            aLname: item.aLname,
             isCurrent: true,
             date: item.date,
             returnDate: item.returnDate            
@@ -196,6 +210,8 @@ export class Tab3Page implements OnInit {
           Selected: firestore.FieldValue.arrayRemove({
             itemName: item.itemName,
             Description: item.Description,
+            aFname: item.aFname,
+            aLname: item.aLname,
             isCurrent: true,
             date: item.date,
             returnDate: item.returnDate            
